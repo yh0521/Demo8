@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="WebRL: Training LLM Web Agents via Self-Evolving Online Curriculum Reinforcement Learning">
+  <meta name="keywords" content="WebRL, LLM, Reinforcement Learning, Web Agents, Curriculum Learning">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>WebRL: Training LLM Web Agents via Self-Evolving Online Curriculum Reinforcement Learning</title>
+
+  <script type="module" src="https://md-block.verou.me/md-block.js"></script>
+
+  <!-- Load d3.js -->
+  <script src="https://d3js.org/d3.v4.js"></script>
+
+  <!-- Load plotly.js -->
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+  <!-- Color palette -->
+  <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/d3plus-text@1"></script>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-MZNP3SCQ1V"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-MZNP3SCQ1V');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+</head>
+
+<body>
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-widescreen">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">WebRL: Training LLM Web Agents via Self-Evolving Online Curriculum Reinforcement Learning</h1>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">
+                Zehan Qi<sup>*</sup>, Xiao Liu<sup>*</sup>, Iat Long Iong, Hanyu Lai, Xueqiao Sun, Xinyue Yang, Jiadai Sun, Yu Yang, Shuntian Yao, Tianjie Zhang, Wei Xu, Jie Tang, Yuxiao Dong
+              </span>
+            </div>
+            <br>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">
+                Tsinghua University, Zhipu AI
+              </span>
+            </div>
+            <i style="font-size: 15px !important;">*Equal contribution. Emails: qzh23@mails.tsinghua.edu.cn, shawliu9@gmail.com</i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section>
+    <div class="container is-max-widescreen">
+      <h2 class="title">Abstract</h2>
+      <p>Large language models (LLMs) have shown remarkable potential as autonomous agents, particularly in web-based tasks. However, existing LLM web agents heavily rely on expensive proprietary LLM APIs, while open LLMs lack the necessary decision-making capabilities. This paper introduces WebRL, a self-evolving online curriculum reinforcement learning framework designed to train high-performance web agents using open LLMs. WebRL addresses three key challenges in building LLM web agents, including the scarcity of training tasks, sparse feedback signals, and policy distribution drift in online learning. Specifically, WebRL incorporates 1) a self-evolving curriculum that generates new tasks from unsuccessful attempts, 2) a robust outcome-supervised reward model (ORM), and 3) adaptive reinforcement learning strategies to ensure consistent improvements. We apply WebRL to transform open Llama-3.1 and GLM-4 models into proficient web agents. On WebArena-Lite, WebRL improves the success rate of Llama-3.1-8B from 4.8% to 42.4%, and from 6.1% to 43% for GLM-4-9B. These open models significantly surpass the performance of GPT-4-Turbo (17.6%) and GPT-4o (13.9%) and outperform previous state-of-the-art web agents trained on open LLMs (AutoWebGLM, 18.2%). Our findings demonstrate WebRL's effectiveness in bridging the gap between open and proprietary LLM-based web agents, paving the way for more accessible and powerful autonomous web interaction systems. The code, model, and data are made publicly available at <a href="https://github.com/THUDM/WebRL">https://github.com/THUDM/WebRL</a>.</p>
+    </div>
+  </section>
+  <section>
+    <div class="container is-max-widescreen">
+      <h2 class="title">Introduction</h2>
+      <p>Large language models (LLMs) have exhibited not only superior comprehension of human language, commonsense reasoning, and knowledge acquisition, but also significant potential in complex planning and logical reasoning, indicating their promising trajectory towards serving as autonomous LLM agents. A diverse array of applications for LLM agents has proliferated, encompassing domains such as code generation, database manipulation, and graphical user interface (GUI) interaction. Among these, web agents powered by LLMs have garnered particular attention due to their extensive application prospects and unique potential for fostering authentic autonomous intelligence within the digital ecosystem.</p>
+      <p>Notwithstanding these advancements, existing LLM web agents, regardless of their performance metrics or architectural paradigms, remain under-developed. High-performing LLM web agents predominantly rely on meticulously crafted prompts in conjunction with proprietary LLM APIs (e.g., OpenAI GPT-4) for web page comprehension and manipulation, which is both expensive and time-intensive. Conversely, open-source LLMs exhibit notable deficiencies in their capability to function as proficient web agents, primarily due to the scarcity of decision-centric data in both pre-training and post-training periods. Despite recent endeavors to train web agents on open LLMs via imitation learning, these approaches insufficiently leverage the inherently online nature of web interactions and fail to yield consistent, continual improvements.</p>
+    </div>
+  </section>
+  <section>
+    <div class="container is-max-widescreen">
+      <h2 class="title">Methods</h2>
+      <p>In this work, we propose to train high-performance web agents based on open LLMs within online environments, specifically utilizing WebArena. Our investigation has identified several critical challenges inherent to this task:</p>
+      <ul>
+        <li><strong>Insufficiency of training tasks:</strong> In contrast to offline datasets that facilitate...</li>
+        <li><strong>Sparse feedback signals:</strong> The nature of web interactions often results in...</li>
+        <li><strong>Policy distribution drift:</strong> As the agent learns and adapts, the distribution of...</li>
+      </ul>
+      <p>To address these challenges, WebRL incorporates:</p>
+      <ul>
+        <li><strong>Self-evolving curriculum:</strong> This component generates new tasks from unsuccessful attempts...</li>
+        <li><strong>Outcome-supervised reward model (ORM):</strong> A robust ORM is employed to provide...</li>
+        <li><strong>Adaptive reinforcement learning strategies:</strong> These strategies ensure consistent improvements...</li>
+      </ul>
+    </div>
+  </section>
+  <section>
+    <div class="container is-max-widescreen">
+      <h2 class="title">Experimental Results</h2>
+      <p>We apply WebRL to transform open Llama-3.1 and GLM-4 models into proficient web agents. On WebArena-Lite, WebRL improves the success rate of Llama-3.1-8B from 4.8% to 42.4%, and from 6.1% to 43% for GLM-4-9B. These open models significantly surpass the performance of GPT-4-Turbo (17.6%) and GPT-4o (13.9%) and outperform previous state-of-the-art web agents trained on open LLMs (AutoWebGLM, 18.2%).</p>
+      <div style="text-align: center;">
+        <img src="./static/images/compare.png" alt="Performance comparison between proprietary LLMs and open-sourced LLMs on WebArena-Lite" width="95%">
+        <p>Performance comparison between proprietary LLMs and open-sourced LLMs on WebArena-Lite.</p>
+      </div>
+      <div style="text-align: center;">
+        <img src="./static/images/opensource.png" alt="Performance changes of GLM-4-9B trained with WebRL and baseline methods" width="95%">
+        <p>Performance changes of GLM-4-9B trained with WebRL and baseline methods.</p>
+      </div>
+    </div>
+  </section>
+  <footer class="footer">
+    <div class="container">
+      <div class="content has-text-centered">
+        <a class="icon-link" href="https://github.com/THUDM/WebRL" class="external-link">
+          <i class="fab fa-github"></i>
+        </a>
+      </div>
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content">
+            <p>
+              This website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+            </p>
+            <p>
+              This means you are free to borrow the <a href="https://github.com/THUDM/WebRL">source code</a> of this website (the website is hosted on the gh-pages branch of the repository), we just ask that you link back to this page in the footer. The design of this website is based on <a href="https://nerfies.github.io/">NERFies</a>, <a href="https://ds1000-code-gen.github.io/" target="_blank">DS-1000</a> and <a href="https://webshop-pnlp.github.io/" target="_blank">WebShop</a>. Please remember to remove the analytics code included in the header of the website which you do not want on your website.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+</html>
